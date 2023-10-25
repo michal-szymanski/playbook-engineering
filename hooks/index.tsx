@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { TransactionContext } from '@/contexts';
+import { TransactionsContext } from '@/contexts';
 
 export const useTransactionsStore = () => {
-    const transactionsStore = useContext(TransactionContext);
+    const transactionsStore = useContext(TransactionsContext);
 
     if (!transactionsStore) throw new Error('Transactions Store is not available');
 

@@ -27,12 +27,11 @@ const TransactionsTable = () => {
             id: 'amountPLN',
             accessorKey: 'amountPLN',
             header: ({ column }) => renderSortingButton(column, 'Amount (PLN)'),
-            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.amountPLN}</div>
+            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.amountPLN.toFixed(2)}</div>
         },
         {
             id: 'amountEUR',
-            accessorKey: 'amountPLN',
-            header: ({ column }) => renderSortingButton(column, 'Amount (EUR)'),
+            header: () => <div className="text-left">Amount (EUR)</div>,
             cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{(transaction.amountPLN * conversionRate).toFixed(2)}</div>
         },
         {
