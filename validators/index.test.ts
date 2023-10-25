@@ -45,6 +45,10 @@ describe('Given the scale is 2', () => {
     test('Input 2x dot', () => {
         expect(() => validateCurrencyInput('9.23.', 2)).toThrow();
     });
+
+    test('Input zero', () => {
+        expect(() => validateCurrencyInput('0', 2)).toThrow();
+    });
 });
 
 describe('Given the scale is 3', () => {
