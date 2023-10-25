@@ -32,7 +32,9 @@ const TransactionsTable = () => {
         {
             id: 'amountEUR',
             header: () => <div className="text-left">Amount (EUR)</div>,
-            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{(transaction.amountPLN * conversionRate).toFixed(2)}</div>
+            cell: ({ row: { original: transaction } }) => (
+                <div className="pl-4 text-left">{conversionRate ? (transaction.amountPLN * conversionRate).toFixed(2) : 'n/a'}</div>
+            )
         },
         {
             id: 'options',
@@ -48,12 +50,13 @@ const TransactionsTable = () => {
     ];
 
     const totalPLN = transactions.reduce((acc, curr) => acc + curr.amountPLN, 0);
+    const totalEUR = conversionRate ? `(${(totalPLN * conversionRate).toFixed(2)} EUR)` : null;
 
     return (
         <div className="flex flex-col gap-5">
             <DataTable columns={columns} data={transactions} />
             <span className="text-lg">
-                Sum: {totalPLN.toFixed(2)} PLN ({(totalPLN * conversionRate).toFixed(2)} EUR)
+                Sum: {totalPLN.toFixed(2)} PLN {totalEUR}
             </span>
         </div>
     );
