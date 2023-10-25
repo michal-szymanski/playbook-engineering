@@ -56,7 +56,7 @@ const SetConversionRateForm = () => {
                     name="conversionRate"
                     render={({ field }) => (
                         <FormItem className="flex items-center gap-2">
-                            <FormLabel className="pb-2.5 text-lg">1 EUR =</FormLabel>
+                            <FormLabel className="whitespace-nowrap pb-2.5 text-lg">1 EUR =</FormLabel>
                             <div>
                                 <FormControl className="w-32">
                                     <Input
