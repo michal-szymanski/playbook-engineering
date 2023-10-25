@@ -1,35 +1,46 @@
 import { DataTable } from '@/components/ui/data-table';
-import { ColumnDef } from '@tanstack/react-table';
+import { Column, ColumnDef } from '@tanstack/react-table';
 import { Transaction } from '@/types';
 import { Button } from '@/components/ui/button';
 import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
+import { ArrowUpDown } from 'lucide-react';
 
 const TransactionsTable = () => {
     const { transactions, conversionRate, removeTransaction } = useTransactionsStore();
 
+    const renderSortingButton = (column: Column<Transaction>, text: string) => (
+        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+            {text}
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+        </Button>
+    );
+
     const columns: ColumnDef<Transaction>[] = [
         {
             id: 'title',
-            header: () => <div className="text-left">Title</div>,
-            cell: ({ row: { original: transaction } }) => <div className="text-left">{transaction.title}</div>
+            accessorKey: 'title',
+            header: ({ column }) => renderSortingButton(column, 'Title'),
+            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.title}</div>
         },
         {
             id: 'amountPLN',
-            header: () => <div className="text-left">Amount (PLN)</div>,
-            cell: ({ row: { original: transaction } }) => <div className="text-left">{transaction.amountPLN}</div>
+            accessorKey: 'amountPLN',
+            header: ({ column }) => renderSortingButton(column, 'Amount (PLN)'),
+            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.amountPLN}</div>
         },
         {
             id: 'amountEUR',
-            header: () => <div className="text-left">Amount (EUR)</div>,
-            cell: ({ row: { original: transaction } }) => <div className="text-left">{(transaction.amountPLN * conversionRate).toFixed(2)}</div>
+            accessorKey: 'amountPLN',
+            header: ({ column }) => renderSortingButton(column, 'Amount (EUR)'),
+            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{(transaction.amountPLN * conversionRate).toFixed(2)}</div>
         },
         {
             id: 'options',
             header: () => <div className="text-center">Options</div>,
             cell: ({ row: { original: transaction } }) => (
                 <div className="text-center">
-                    <Button type="button" onClick={() => removeTransaction(transaction.id)}>
+                    <Button type="button" variant="link" onClick={() => removeTransaction(transaction.id)}>
                         Delete
                     </Button>
                 </div>
