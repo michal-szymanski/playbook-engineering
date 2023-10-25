@@ -54,7 +54,7 @@ const TransactionsTable = () => {
         <div className="flex flex-col gap-5">
             <DataTable columns={columns} data={transactions} />
             <span className="text-lg">
-                Sum: {totalPLN} PLN ({(totalPLN * conversionRate).toFixed(2)} EUR)
+                Sum: {totalPLN.toFixed(2)} PLN ({(totalPLN * conversionRate).toFixed(2)} EUR)
             </span>
         </div>
     );
