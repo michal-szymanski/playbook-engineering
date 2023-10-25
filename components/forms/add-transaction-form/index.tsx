@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
 import { v4 as uuidV4 } from 'uuid';
+import { ChangeEvent } from 'react';
 
 const formSchema = z.object({
     title: z.string().min(5, { message: 'Title should have at least 5 characters' }).max(50, { message: "Title shouldn't be longer that 50 characters" }),
@@ -27,6 +28,35 @@ const AddTransactionForm = () => {
     const onSubmit = async ({ title, amountPLN }: z.infer<typeof formSchema>) => {
         addTransaction({ id: uuidV4(), title, amountPLN: Number(amountPLN), amountEUR: Number(amountPLN) * 4.382 });
         form.reset();
+    };
+
+    const handleChangeAmount = (e: ChangeEvent<HTMLInputElement>, callback: (e: ChangeEvent<HTMLInputElement>) => void) => {
+        try {
+            const { value } = e.target;
+
+            if (value) {
+                const groups = z.array(z.string()).min(0).max(2).parse(value.split('.'));
+
+                if (groups.length === 2) {
+                    z.string().max(2).parse(groups[1]);
+                }
+
+                z.coerce.number().parse(value);
+            }
+            callback(e);
+        } catch {
+            e.preventDefault();
+        }
+    };
+
+    const handleBlurAmount = (e: ChangeEvent<HTMLInputElement>, callback: () => void) => {
+        const { value } = e.target;
+
+        if (value.endsWith('.')) {
+            form.setValue('amountPLN', `${value}0`);
+        }
+
+        callback();
     };
 
     return (
@@ -58,7 +88,11 @@ const AddTransactionForm = () => {
                                 <FormLabel className="w-44 whitespace-nowrap text-lg">Amount (in PLN)</FormLabel>
                                 <div>
                                     <FormControl className="w-96">
-                                        <Input {...field} />
+                                        <Input
+                                            {...field}
+                                            onChange={(e) => handleChangeAmount(e, field.onChange)}
+                                            onBlur={(e) => handleBlurAmount(e, field.onBlur)}
+                                        />
                                     </FormControl>
                                     <div className="h-5 py-2">
                                         <FormMessage />
