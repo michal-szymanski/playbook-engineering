@@ -63,7 +63,7 @@ const AddTransactionForm = () => {
                     name="title"
                     render={({ field }) => (
                         <FormItem className="flex items-center gap-5">
-                            <FormLabel className="w-44 whitespace-nowrap text-lg">Title of transaction</FormLabel>
+                            <FormLabel className="w-44 whitespace-nowrap pb-2.5 text-lg">Title of transaction</FormLabel>
                             <div>
                                 <FormControl className="w-96">
                                     <Input {...field} />
@@ -81,7 +81,7 @@ const AddTransactionForm = () => {
                         name="amountPLN"
                         render={({ field }) => (
                             <FormItem className="flex items-center gap-5">
-                                <FormLabel className="w-44 whitespace-nowrap text-lg">Amount (in PLN)</FormLabel>
+                                <FormLabel className="w-44 whitespace-nowrap pb-2.5 text-lg">Amount (in PLN)</FormLabel>
                                 <div>
                                     <FormControl className="w-96">
                                         <Input
