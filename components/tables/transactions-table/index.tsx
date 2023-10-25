@@ -27,14 +27,16 @@ const TransactionsTable = () => {
             id: 'amountPLN',
             accessorKey: 'amountPLN',
             header: ({ column }) => renderSortingButton(column, 'Amount (PLN)'),
-            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.amountPLN.toFixed(2)}</div>
+            cell: ({ row: { original: transaction } }) => <div className="pl-4 text-left">{transaction.amountPLN.toFixed(2)}</div>,
+            maxSize: 300
         },
         {
             id: 'amountEUR',
             header: () => <div className="text-left">Amount (EUR)</div>,
             cell: ({ row: { original: transaction } }) => (
-                <div className="pl-4 text-left">{conversionRate ? (transaction.amountPLN * conversionRate).toFixed(2) : 'n/a'}</div>
-            )
+                <div className="text-left">{conversionRate ? (transaction.amountPLN * conversionRate).toFixed(2) : 'n/a'}</div>
+            ),
+            maxSize: 300
         },
         {
             id: 'options',
@@ -45,7 +47,8 @@ const TransactionsTable = () => {
                         Delete
                     </Button>
                 </div>
-            )
+            ),
+            maxSize: 100
         }
     ];
 
