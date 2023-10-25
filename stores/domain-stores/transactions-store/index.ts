@@ -10,7 +10,8 @@ class TransactionsStore {
             transactions: observable,
             conversionRate: observable,
             addTransaction: action.bound,
-            removeTransaction: action.bound
+            removeTransaction: action.bound,
+            setConversionRate: action.bound
         });
     }
 
@@ -20,6 +21,10 @@ class TransactionsStore {
 
     removeTransaction(id: string) {
         this.transactions = this.transactions.filter((t) => t.id !== id);
+    }
+
+    setConversionRate(value: number) {
+        this.conversionRate = value;
     }
 }
 

@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
 import { v4 as uuidV4 } from 'uuid';
 import { ChangeEvent } from 'react';
+import { validateCurrencyInput } from '@/validators';
 
 const formSchema = z.object({
     title: z.string().min(5, { message: 'Title should have at least 5 characters' }).max(50, { message: "Title shouldn't be longer that 50 characters" }),
@@ -35,14 +36,9 @@ const AddTransactionForm = () => {
             const { value } = e.target;
 
             if (value) {
-                const groups = z.array(z.string()).min(0).max(2).parse(value.split('.'));
-
-                if (groups.length === 2) {
-                    z.string().max(2).parse(groups[1]);
-                }
-
-                z.coerce.number().parse(value);
+                validateCurrencyInput(value, 2);
             }
+
             callback(e);
         } catch {
             e.preventDefault();

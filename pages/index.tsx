@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google';
 import AddTransactionForm from '@/components/forms/add-transaction-form';
 import TransactionsTable from '@/components/tables/transactions-table';
+import SetConversionRateForm from '@/components/forms/set-conversion-rate-form';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -10,7 +11,7 @@ export default function Home() {
             <div className="container flex flex-col gap-20">
                 <div className="flex items-center justify-between pb-10">
                     <h1 className=" text-4xl font-bold">List of expenses</h1>
-                    <span>1 EUR = 4,382 PLN</span>
+                    <SetConversionRateForm />
                 </div>
                 <AddTransactionForm />
                 <TransactionsTable />
