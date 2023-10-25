@@ -9,7 +9,7 @@ import { ChangeEvent } from 'react';
 import { validateCurrencyInput } from '@/validators';
 
 const formSchema = z.object({
-    conversionRate: z.string().min(1, { message: 'Value required' })
+    conversionRate: z.string().min(1, { message: 'Value is required' })
 });
 
 const SetConversionRateForm = () => {
