@@ -43,7 +43,7 @@ const AddTransactionForm = () => {
                         </FormItem>
                     )}
                 />
-                <div className="flex items-center gap-5">
+                <div className="flex items-center justify-between">
                     <FormField
                         control={form.control}
                         name="amount"
