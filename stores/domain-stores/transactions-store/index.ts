@@ -3,10 +3,12 @@ import { action, makeObservable, observable } from 'mobx';
 
 class TransactionsStore {
     transactions: Transaction[] = [];
+    conversionRate = 4.382;
 
     constructor() {
         makeObservable(this, {
             transactions: observable,
+            conversionRate: observable,
             addTransaction: action.bound,
             removeTransaction: action.bound
         });

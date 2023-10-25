@@ -26,7 +26,7 @@ const AddTransactionForm = () => {
     const { addTransaction } = useTransactionsStore();
 
     const onSubmit = async ({ title, amountPLN }: z.infer<typeof formSchema>) => {
-        addTransaction({ id: uuidV4(), title, amountPLN: Number(amountPLN), amountEUR: Number(amountPLN) * 4.382 });
+        addTransaction({ id: uuidV4(), title, amountPLN: Number(amountPLN) });
         form.reset();
     };
 

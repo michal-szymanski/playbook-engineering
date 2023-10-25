@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
 
 const TransactionsTable = () => {
-    const { transactions, removeTransaction } = useTransactionsStore();
+    const { transactions, conversionRate, removeTransaction } = useTransactionsStore();
 
     const columns: ColumnDef<z.infer<typeof transactionSchema>>[] = [
         {
@@ -23,7 +23,7 @@ const TransactionsTable = () => {
         {
             id: 'amountEUR',
             header: () => <div className="text-left">Amount (EUR)</div>,
-            cell: ({ row: { original: transaction } }) => <div className="text-left">{transaction.amountEUR}</div>
+            cell: ({ row: { original: transaction } }) => <div className="text-left">{(transaction.amountPLN * conversionRate).toFixed(2)}</div>
         },
         {
             id: 'options',
