@@ -3,8 +3,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { z } from 'zod';
 import { transactionSchema } from '@/types';
 import { Button } from '@/components/ui/button';
+import { observer } from 'mobx-react-lite';
+import { useTransactionsStore } from '@/hooks';
 
 const TransactionsTable = () => {
+    const { transactions, removeTransaction } = useTransactionsStore();
+
     const columns: ColumnDef<z.infer<typeof transactionSchema>>[] = [
         {
             id: 'title',
@@ -26,14 +30,14 @@ const TransactionsTable = () => {
             header: () => <div className="text-center">Options</div>,
             cell: ({ row: { original: transaction } }) => (
                 <div className="text-center">
-                    <Button type="button" onClick={() => console.log({ transaction })}>
+                    <Button type="button" onClick={() => removeTransaction(transaction.id)}>
                         Delete
                     </Button>
                 </div>
             )
         }
     ];
-    return <DataTable columns={columns} data={[]} />;
+    return <DataTable columns={columns} data={transactions} />;
 };
 
-export default TransactionsTable;
+export default observer(TransactionsTable);

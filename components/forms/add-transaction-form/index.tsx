@@ -4,10 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { observer } from 'mobx-react-lite';
+import { useTransactionsStore } from '@/hooks';
+import { v4 as uuidV4 } from 'uuid';
 
 const formSchema = z.object({
     title: z.string().min(5, { message: 'Title should have at least 5 characters' }).max(50, { message: "Title shouldn't be longer that 50 characters" }),
-    amount: z.string().min(1, { message: 'Amount is required' })
+    amountPLN: z.string().min(1, { message: 'Amount is required' })
 });
 
 const AddTransactionForm = () => {
@@ -15,12 +18,15 @@ const AddTransactionForm = () => {
         resolver: zodResolver(formSchema),
         defaultValues: {
             title: '',
-            amount: ''
+            amountPLN: ''
         }
     });
 
-    const onSubmit = async ({ title, amount }: z.infer<typeof formSchema>) => {
-        console.log({ title, amount });
+    const { addTransaction } = useTransactionsStore();
+
+    const onSubmit = async ({ title, amountPLN }: z.infer<typeof formSchema>) => {
+        addTransaction({ id: uuidV4(), title, amountPLN: Number(amountPLN), amountEUR: Number(amountPLN) * 4.382 });
+        form.reset();
     };
 
     return (
@@ -46,7 +52,7 @@ const AddTransactionForm = () => {
                 <div className="flex items-center justify-between">
                     <FormField
                         control={form.control}
-                        name="amount"
+                        name="amountPLN"
                         render={({ field }) => (
                             <FormItem className="flex items-center gap-5">
                                 <FormLabel className="w-44 whitespace-nowrap text-lg">Amount (in PLN)</FormLabel>
@@ -70,4 +76,4 @@ const AddTransactionForm = () => {
     );
 };
 
-export default AddTransactionForm;
+export default observer(AddTransactionForm);
