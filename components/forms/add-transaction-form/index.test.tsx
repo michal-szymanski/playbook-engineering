@@ -7,7 +7,7 @@ import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { TransactionsContext } from '@/contexts';
 
 describe('<AddTransactionForm/>', () => {
-    test('Required elements exist on the page', async () => {
+    test('Required elements exist on the page', () => {
         render(
             <TransactionsContext.Provider value={new TransactionsStore()}>
                 <AddTransactionForm />

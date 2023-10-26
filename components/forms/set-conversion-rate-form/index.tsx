@@ -63,6 +63,7 @@ const SetConversionRateForm = () => {
                                         {...field}
                                         onChange={(e) => handleChangeConversionRate(e, field.onChange)}
                                         onBlur={(e) => handleBlurConversionRate(e, field.onBlur)}
+                                        className="text-base"
                                     />
                                 </FormControl>
                                 <div className="h-5 py-2">

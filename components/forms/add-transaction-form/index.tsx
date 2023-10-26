@@ -66,7 +66,7 @@ const AddTransactionForm = () => {
                             <FormLabel className="w-44 whitespace-nowrap text-lg lg:pb-2.5">Title of transaction</FormLabel>
                             <div>
                                 <FormControl className="lg:w-96">
-                                    <Input {...field} />
+                                    <Input {...field} className="text-base" />
                                 </FormControl>
                                 <div className="h-5 py-2">
                                     <FormMessage />
@@ -88,6 +88,7 @@ const AddTransactionForm = () => {
                                             {...field}
                                             onChange={(e) => handleChangeAmount(e, field.onChange)}
                                             onBlur={(e) => handleBlurAmount(e, field.onBlur)}
+                                            className="text-base"
                                         />
                                     </FormControl>
                                     <div className="h-5 py-2">
