@@ -9,10 +9,11 @@ import { useTransactionsStore } from '@/hooks';
 import { v4 as uuidV4 } from 'uuid';
 import { ChangeEvent } from 'react';
 import { validateCurrencyInput } from '@/validators';
+import { currencySchema } from '@/types';
 
 const formSchema = z.object({
     title: z.string().min(5, { message: 'Title should have at least 5 characters' }).max(50, { message: "Title shouldn't be longer that 50 characters" }),
-    amountPLN: z.string().min(1, { message: 'Amount is required' })
+    amountPLN: currencySchema
 });
 
 const AddTransactionForm = () => {

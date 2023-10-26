@@ -41,12 +41,24 @@ describe('Given the scale is 2', () => {
         expect(() => validateCurrencyInput('9.a', 2)).toThrow();
     });
 
+    test('Input only dot', () => {
+        expect(() => validateCurrencyInput('.', 2)).toThrow();
+    });
+
     test('Input 2x dot', () => {
         expect(() => validateCurrencyInput('9.23.', 2)).toThrow();
     });
 
     test('Input zero', () => {
-        expect(() => validateCurrencyInput('0', 2)).toThrow();
+        expect(() => validateCurrencyInput('0', 2)).not.toThrow();
+    });
+
+    test('Input 2x zero', () => {
+        expect(() => validateCurrencyInput('00', 2)).toThrow();
+    });
+
+    test('Input Infinity', () => {
+        expect(() => validateCurrencyInput('Infinity', 2)).toThrow();
     });
 });
 

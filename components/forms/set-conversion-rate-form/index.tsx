@@ -7,9 +7,10 @@ import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
 import { ChangeEvent } from 'react';
 import { validateCurrencyInput } from '@/validators';
+import { currencySchema } from '@/types';
 
 const formSchema = z.object({
-    conversionRate: z.string().min(1, { message: 'Value is required' })
+    conversionRate: currencySchema
 });
 
 const SetConversionRateForm = () => {

@@ -76,7 +76,7 @@ describe('<AddTransactionForm/>', () => {
 
         await user.click(submitButton);
 
-        const validationError = screen.getByText('Amount is required');
+        const validationError = screen.getByText('Value is required');
 
         expect(amountInput).toHaveAttribute('aria-invalid', 'true');
         expect(amountLabel).toHaveClass('text-destructive');

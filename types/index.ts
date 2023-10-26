@@ -7,3 +7,5 @@ export const transactionSchema = z.object({
 });
 
 export type Transaction = z.infer<typeof transactionSchema>;
+
+export const currencySchema = z.string().refine((value) => [...value].filter((c) => c !== '0' && c !== '.').length > 0, { message: 'Value is required' });
