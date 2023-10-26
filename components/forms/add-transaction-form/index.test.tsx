@@ -35,21 +35,25 @@ describe('<AddTransactionForm/>', () => {
             </TransactionsContext.Provider>
         );
 
+        const user = userEvent.setup();
         const titleLabel = screen.getByText('Title of transaction');
         const titleInput = screen.getByLabelText('Title of transaction', { selector: 'input' });
         const submitButton = screen.getByText('Add');
 
-        await userEvent.type(titleInput, 'test');
-        await userEvent.click(submitButton);
+        expect(titleInput).toHaveAttribute('aria-invalid', 'false');
+        expect(titleLabel).not.toHaveClass('text-destructive');
+
+        await user.type(titleInput, 'test');
+        await user.click(submitButton);
 
         const validationError = screen.getByText('Title should have at least 5 characters');
 
         expect(titleInput).toHaveAttribute('aria-invalid', 'true');
+        expect(titleLabel).toHaveClass('text-destructive');
         expect(validationError).toBeInTheDocument();
         expect(validationError).toHaveClass('text-destructive');
-        expect(titleLabel).toHaveClass('text-destructive');
 
-        await userEvent.type(titleInput, '2');
+        await user.type(titleInput, '2');
 
         expect(titleInput).toHaveAttribute('aria-invalid', 'false');
         expect(titleLabel).not.toHaveClass('text-destructive');
@@ -62,24 +66,28 @@ describe('<AddTransactionForm/>', () => {
             </TransactionsContext.Provider>
         );
 
+        const user = userEvent.setup();
         const amountLabel = screen.getByText('Amount (in PLN)');
         const amountInput = screen.getByLabelText('Amount (in PLN)', { selector: 'input' });
         const submitButton = screen.getByText('Add');
 
-        await userEvent.click(submitButton);
+        expect(amountInput).toHaveAttribute('aria-invalid', 'false');
+        expect(amountLabel).not.toHaveClass('text-destructive');
+
+        await user.click(submitButton);
 
         const validationError = screen.getByText('Amount is required');
 
         expect(amountInput).toHaveAttribute('aria-invalid', 'true');
+        expect(amountLabel).toHaveClass('text-destructive');
         expect(validationError).toBeInTheDocument();
         expect(validationError).toHaveClass('text-destructive');
-        expect(amountLabel).toHaveClass('text-destructive');
 
-        await userEvent.type(amountInput, 'a-!@#$%^&*()+_,.<>');
+        await user.type(amountInput, 'a-!@#$%^&*()+_,.<>');
 
         expect(amountInput).toHaveValue('');
 
-        await userEvent.type(amountInput, '1.23');
+        await user.type(amountInput, '1.23');
 
         expect(amountInput).toHaveAttribute('aria-invalid', 'false');
         expect(amountLabel).not.toHaveClass('text-destructive');
