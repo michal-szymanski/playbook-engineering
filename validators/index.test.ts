@@ -1,5 +1,4 @@
-import { validateCurrencyInput } from '.';
-import { describe } from 'node:test';
+import { validateCurrencyInput } from '@/validators/index';
 
 describe('Given the scale is 2', () => {
     test('Input letter', () => {
