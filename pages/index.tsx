@@ -13,9 +13,9 @@ export default function Home() {
                 <title>Playground Engineering</title>
             </Head>
             <main className={`flex min-h-screen flex-col items-center justify-between py-20 ${inter.className}`}>
-                <div className="container flex flex-col gap-5 lg:gap-20">
-                    <div className="flex flex-col justify-between gap-5 pb-10 lg:flex-row lg:items-center">
-                        <h1 className="text-4xl font-bold">List of expenses</h1>
+                <div className="container flex flex-col gap-5 md:gap-20">
+                    <div className="flex flex-col justify-between gap-5 pb-10 md:flex-row md:items-center">
+                        <h1 className="text-4xl font-bold md:pb-2.5">List of expenses</h1>
                         <div className="flex items-center gap-2">
                             <SetConversionRateForm />
                             <span className="pb-2.5 text-lg font-medium">PLN</span>

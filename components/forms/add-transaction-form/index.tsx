@@ -63,10 +63,10 @@ const AddTransactionForm = () => {
                     control={form.control}
                     name="title"
                     render={({ field }) => (
-                        <FormItem className="flex flex-col lg:flex-row lg:items-center lg:gap-5">
-                            <FormLabel className="w-44 whitespace-nowrap text-lg lg:pb-2.5">Title of transaction</FormLabel>
+                        <FormItem className="flex flex-col md:flex-row md:items-center md:gap-5">
+                            <FormLabel className="w-44 whitespace-nowrap text-lg md:pb-2.5">Title of transaction</FormLabel>
                             <div>
-                                <FormControl className="lg:w-96">
+                                <FormControl className="md:w-80">
                                     <Input {...field} className="text-base" />
                                 </FormControl>
                                 <div className="h-5 py-2">
@@ -76,15 +76,15 @@ const AddTransactionForm = () => {
                         </FormItem>
                     )}
                 />
-                <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-center">
+                <div className="flex flex-col justify-between gap-5 md:flex-row md:items-center">
                     <FormField
                         control={form.control}
                         name="amountPLN"
                         render={({ field }) => (
-                            <FormItem className="flex flex-col lg:flex-row lg:items-center lg:gap-5">
+                            <FormItem className="flex flex-col md:flex-row md:items-center md:gap-5">
                                 <FormLabel className="w-44 whitespace-nowrap pb-2.5 text-lg">Amount (in PLN)</FormLabel>
                                 <div>
-                                    <FormControl className="lg:w-96">
+                                    <FormControl className="md:w-80">
                                         <Input
                                             {...field}
                                             onChange={(e) => handleChangeAmount(e, field.onChange)}
@@ -99,9 +99,11 @@ const AddTransactionForm = () => {
                             </FormItem>
                         )}
                     />
-                    <Button type="submit" className="w-full self-end lg:w-36 lg:self-center">
-                        Add
-                    </Button>
+                    <div className="md:pb-2.5">
+                        <Button type="submit" className="w-full self-end md:w-36 md:self-center">
+                            Add
+                        </Button>
+                    </div>
                 </div>
             </form>
         </Form>
