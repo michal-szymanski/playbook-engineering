@@ -1,8 +1,7 @@
-import React from 'react';
+import AddTransactionForm from '.';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import AddTransactionForm from '@/components/forms/add-transaction-form/index';
 import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { TransactionsContext } from '@/contexts';
 

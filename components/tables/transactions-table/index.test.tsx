@@ -1,10 +1,8 @@
-import React from 'react';
+import TransactionsTable from '.';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-
 import { TransactionsContext } from '@/contexts';
 import userEvent from '@testing-library/user-event';
-import TransactionsTable from '@/components/tables/transactions-table/index';
 import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { Transaction } from '@/types';
 import { convertAmount } from '@/utils';

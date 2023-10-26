@@ -1,9 +1,8 @@
-import React from 'react';
+import SetConversionRateForm from '.';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { TransactionsContext } from '@/contexts';
-import SetConversionRateForm from '@/components/forms/set-conversion-rate-form/index';
 import userEvent from '@testing-library/user-event';
 
 describe('<SetConversionRateForm/>', () => {
