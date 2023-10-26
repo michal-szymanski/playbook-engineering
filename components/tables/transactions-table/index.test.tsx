@@ -107,14 +107,13 @@ describe('<TransactionsTable/>', () => {
         expect(dataRowsAfterAction[1].children[0].children[0]).toHaveTextContent(transaction1.title);
     });
 
-    test('User deletes conversion rate', async () => {
+    test('Sum is calculated correctly', async () => {
         const store = new TransactionsStore();
         const transaction1: Transaction = { id: '1', amountPLN: 200, title: 'transaction 1' };
         const transaction2: Transaction = { id: '2', amountPLN: 100, title: 'transaction 2' };
 
         store.addTransaction(transaction1);
         store.addTransaction(transaction2);
-        store.setConversionRate(0);
 
         render(
             <TransactionsContext.Provider value={store}>
@@ -122,7 +121,33 @@ describe('<TransactionsTable/>', () => {
             </TransactionsContext.Provider>
         );
 
-        const notAvailableCells = screen.getAllByText('n/a');
-        expect(notAvailableCells).toHaveLength(2);
+        const sum = screen.getByText('Sum:', { exact: false });
+        const totalPLN = transaction1.amountPLN + transaction2.amountPLN;
+        const totalEUR = totalPLN * store.conversionRate;
+
+        expect(sum).toHaveTextContent(`Sum: ${totalPLN.toFixed(2)} PLN (${totalEUR.toFixed(2)} EUR)`);
     });
+});
+
+test('User deletes conversion rate', async () => {
+    const store = new TransactionsStore();
+    const transaction1: Transaction = { id: '1', amountPLN: 200, title: 'transaction 1' };
+    const transaction2: Transaction = { id: '2', amountPLN: 100, title: 'transaction 2' };
+
+    store.addTransaction(transaction1);
+    store.addTransaction(transaction2);
+    store.setConversionRate(0);
+
+    render(
+        <TransactionsContext.Provider value={store}>
+            <TransactionsTable />
+        </TransactionsContext.Provider>
+    );
+
+    const notAvailableCells = screen.getAllByText('n/a');
+    const sum = screen.getByText('Sum:', { exact: false });
+    const totalPLN = transaction1.amountPLN + transaction2.amountPLN;
+
+    expect(notAvailableCells).toHaveLength(2);
+    expect(sum).toHaveTextContent(`Sum: ${totalPLN.toFixed(2)} PLN`);
 });
