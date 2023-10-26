@@ -14,11 +14,15 @@ describe('<AddTransactionForm/>', () => {
             </TransactionsContext.Provider>
         );
 
+        const titleLabel = screen.getByText('Title of transaction');
         const titleInput = screen.getByLabelText('Title of transaction', { selector: 'input' });
+        const amountLabel = screen.getByText('Amount (in PLN)');
         const amountInput = screen.getByLabelText('Amount (in PLN)', { selector: 'input' });
         const submitButton = screen.getByText('Add');
 
+        expect(titleLabel).toBeInTheDocument();
         expect(titleInput).toBeInTheDocument();
+        expect(amountLabel).toBeInTheDocument();
         expect(amountInput).toBeInTheDocument();
         expect(submitButton).toBeInTheDocument();
         expect(submitButton).toHaveAttribute('type', 'submit');
