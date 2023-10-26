@@ -53,8 +53,12 @@ describe('Given the scale is 2', () => {
         expect(() => validateCurrencyInput('0', 2)).not.toThrow();
     });
 
-    test('Input 2x zero', () => {
+    test('Input 2x zero as first characters', () => {
         expect(() => validateCurrencyInput('00', 2)).toThrow();
+    });
+
+    test('Input 2x zero with first character non zero', () => {
+        expect(() => validateCurrencyInput('100', 2)).not.toThrow();
     });
 
     test('Input Infinity', () => {

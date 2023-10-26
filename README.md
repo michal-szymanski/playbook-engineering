@@ -5,7 +5,7 @@ Welcome to my repository. This project has been created using React.js via Next.
 -   Fully type safe
 -   Fully responsive
 -   Fully accessible (I'm using shadcn-ui for this)
--   Bulletproof (30 tests)
+-   Bulletproof (over 30 tests)
 
 Hopefully you will find this good enough.
 
