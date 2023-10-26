@@ -5,6 +5,7 @@ import '@testing-library/jest-dom';
 import AddTransactionForm from '@/components/forms/add-transaction-form/index';
 import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { TransactionsContext } from '@/contexts';
+
 describe('<AddTransactionForm/>', () => {
     test('Required elements exist on the page', async () => {
         render(
@@ -34,7 +35,6 @@ describe('<AddTransactionForm/>', () => {
         const titleInput = screen.getByLabelText('Title of transaction', { selector: 'input' });
         const submitButton = screen.getByText('Add');
 
-        await userEvent.click(titleInput);
         await userEvent.type(titleInput, 'test');
         await userEvent.click(submitButton);
 
@@ -46,9 +46,38 @@ describe('<AddTransactionForm/>', () => {
         expect(titleLabel).toHaveClass('text-destructive');
 
         await userEvent.type(titleInput, '2');
-        await userEvent.click(submitButton);
 
         expect(titleInput).toHaveAttribute('aria-invalid', 'false');
         expect(titleLabel).not.toHaveClass('text-destructive');
+    });
+
+    test('Amount input requires a value', async () => {
+        render(
+            <TransactionsContext.Provider value={new TransactionsStore()}>
+                <AddTransactionForm />
+            </TransactionsContext.Provider>
+        );
+
+        const amountLabel = screen.getByText('Amount (in PLN)');
+        const amountInput = screen.getByLabelText('Amount (in PLN)', { selector: 'input' });
+        const submitButton = screen.getByText('Add');
+
+        await userEvent.click(submitButton);
+
+        const validationError = screen.getByText('Amount is required');
+
+        expect(amountInput).toHaveAttribute('aria-invalid', 'true');
+        expect(validationError).toBeInTheDocument();
+        expect(validationError).toHaveClass('text-destructive');
+        expect(amountLabel).toHaveClass('text-destructive');
+
+        await userEvent.type(amountInput, 'a-!@#$%^&*()+_,.<>');
+
+        expect(amountInput).toHaveValue('');
+
+        await userEvent.type(amountInput, '1.23');
+
+        expect(amountInput).toHaveAttribute('aria-invalid', 'false');
+        expect(amountLabel).not.toHaveClass('text-destructive');
     });
 });
