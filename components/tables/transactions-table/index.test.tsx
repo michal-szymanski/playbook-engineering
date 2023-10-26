@@ -7,6 +7,7 @@ import userEvent from '@testing-library/user-event';
 import TransactionsTable from '@/components/tables/transactions-table/index';
 import TransactionsStore from '@/stores/domain-stores/transactions-store';
 import { Transaction } from '@/types';
+import { convertAmount } from '@/utils';
 
 describe('<TransactionsTable/>', () => {
     test('Empty data displays no results message', () => {
@@ -34,7 +35,7 @@ describe('<TransactionsTable/>', () => {
 
         const cell1 = screen.getByText(transaction1.title);
         const cell2 = screen.getByText(transaction1.amountPLN.toFixed(2));
-        const cell3 = screen.getByText((transaction1.amountPLN * store.conversionRate).toFixed(2));
+        const cell3 = screen.getByText(convertAmount(transaction1.amountPLN, store.conversionRate).toFixed(2));
         const cell4 = screen.getByText('Delete');
 
         expect(cell1).toBeInTheDocument();
@@ -68,7 +69,7 @@ describe('<TransactionsTable/>', () => {
 
         const cell1 = screen.getByText(transaction1.title);
         const cell2 = screen.getByText(transaction1.amountPLN.toFixed(2));
-        const cell3 = screen.getByText((transaction1.amountPLN * store.conversionRate).toFixed(2));
+        const cell3 = screen.getByText(convertAmount(transaction1.amountPLN, store.conversionRate).toFixed(2));
 
         expect(cell1).toBeInTheDocument();
         expect(cell2).toBeInTheDocument();
@@ -109,11 +110,13 @@ describe('<TransactionsTable/>', () => {
 
     test('Sum is calculated correctly', async () => {
         const store = new TransactionsStore();
-        const transaction1: Transaction = { id: '1', amountPLN: 200, title: 'transaction 1' };
-        const transaction2: Transaction = { id: '2', amountPLN: 100, title: 'transaction 2' };
+        const transaction1: Transaction = { id: '1', amountPLN: 100, title: 'New book about Rust' };
+        const transaction2: Transaction = { id: '2', amountPLN: 20, title: 'Snacks for a football match' };
+        const transaction3: Transaction = { id: '3', amountPLN: 2.55, title: 'Bus ticket' };
 
         store.addTransaction(transaction1);
         store.addTransaction(transaction2);
+        store.addTransaction(transaction3);
 
         render(
             <TransactionsContext.Provider value={store}>
@@ -122,9 +125,10 @@ describe('<TransactionsTable/>', () => {
         );
 
         const sum = screen.getByText('Sum:', { exact: false });
-        const totalPLN = transaction1.amountPLN + transaction2.amountPLN;
-        const totalEUR = totalPLN * store.conversionRate;
+        const totalPLN = store.transactions.reduce((acc, curr) => acc + curr.amountPLN, 0);
+        const totalEUR = convertAmount(totalPLN, store.conversionRate);
 
+        expect(totalEUR).toBe(27.96);
         expect(sum).toHaveTextContent(`Sum: ${totalPLN.toFixed(2)} PLN (${totalEUR.toFixed(2)} EUR)`);
     });
 });

@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { observer } from 'mobx-react-lite';
 import { useTransactionsStore } from '@/hooks';
 import { ArrowUpDown } from 'lucide-react';
+import { convertAmount } from '@/utils';
 
 const TransactionsTable = () => {
     const { transactions, conversionRate, removeTransaction } = useTransactionsStore();
@@ -34,7 +35,7 @@ const TransactionsTable = () => {
             id: 'amountEUR',
             header: () => <div className="text-left">Amount (EUR)</div>,
             cell: ({ row: { original: transaction } }) => (
-                <div className="text-left">{conversionRate ? (transaction.amountPLN * conversionRate).toFixed(2) : 'n/a'}</div>
+                <div className="text-left">{conversionRate ? convertAmount(transaction.amountPLN, conversionRate).toFixed(2) : 'n/a'}</div>
             ),
             maxSize: 300
         },
@@ -53,7 +54,7 @@ const TransactionsTable = () => {
     ];
 
     const totalPLN = transactions.reduce((acc, curr) => acc + curr.amountPLN, 0);
-    const totalEUR = conversionRate ? `(${(totalPLN * conversionRate).toFixed(2)} EUR)` : null;
+    const totalEUR = conversionRate ? `(${convertAmount(totalPLN, conversionRate).toFixed(2)} EUR)` : null;
 
     return (
         <div className="flex flex-col gap-5">
