@@ -10,7 +10,7 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Playground Engineering</title>
+                <title>Playbook Engineering</title>
             </Head>
             <main className={`flex min-h-screen flex-col items-center justify-between py-20 ${inter.className}`}>
                 <div className="container flex flex-col gap-5 md:gap-20">
