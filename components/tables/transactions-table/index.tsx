@@ -43,7 +43,7 @@ const TransactionsTable = () => {
                 return (
                     <div className="text-right">
                         <Button variant="ghost" onClick={() => column.toggleSorting(isSorted === 'asc')}>
-                            Amount (PLN)
+                            <span className="whitespace-normal">Amount (PLN)</span>
                             <div className="pl-2">
                                 {!isSorted ? (
                                     <ArrowUpDown className="h-5 w-5" />
